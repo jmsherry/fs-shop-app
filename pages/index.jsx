@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Layout from "@/components/layout";
 // import { useUser } from "@auth0/nextjs-auth0/client";
 
 export default function Home() {
@@ -12,7 +13,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>Home</h1>
+      <Layout>
+        <h1>Home</h1>
+      </Layout>
     </>
   );
 }
