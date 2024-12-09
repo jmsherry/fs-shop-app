@@ -1,10 +1,35 @@
 import Head from "next/head";
 import Layout from "@/components/layout";
-import {Typography} from "@/components/mui"
+import { Typography } from "@/components/mui";
+import ContactForm from "@/components/forms/contact-form";
 // import { useUser } from "@auth0/nextjs-auth0/client";
+import useUI from "@/components/contexts/UI.hook";
 
-export default function Home() {
-  // const { user, error, isLoading } = useUser();
+export default function Contact() {
+  const { snackbar: {showMessage} } = useUI();
+
+  const onSubmit = async (vals) => {
+    // console.log(vals);
+    try {
+      const resp = await fetch("/api/mail", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(vals),
+      });
+      if (!resp.ok) throw new Error(`Email failed`, { reason: resp });
+      const data = await resp.json();
+      // console.log("success", data);
+      showMessage({
+        type: 'success',
+        message: 'email sent successfully'
+      });
+    } catch (err) {
+      console.log(err);
+      showMessage({ type: "error", message: "email failed" });
+    }
+  };
 
   return (
     <>
@@ -15,7 +40,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Typography variant="h1">Contact</Typography>
+        <Typography variant="h3" component="h1" gutterBottom>
+          Contact
+        </Typography>
+        <ContactForm onSubmit={onSubmit} />
       </Layout>
     </>
   );

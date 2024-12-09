@@ -11,7 +11,7 @@ function Header() {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box component="header" sx={{ display: "flex" }}>
       <MobileNavigation
         handleDrawerToggle={handleDrawerToggle}
         mobileOpen={mobileOpen}
